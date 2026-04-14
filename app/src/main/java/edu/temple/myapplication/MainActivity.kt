@@ -6,6 +6,8 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Button
 import kotlin.concurrent.timer
 
@@ -51,5 +53,32 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        when(item.itemId){
+            R.id.action_start->{
+                    if (!timerBinder.isRunning && !timerBinder.paused) {
+                        timerBinder.start(200)
+                    }else if(timerBinder.isRunning && !timerBinder.paused){
+                        timerBinder.pause()
+                    }else if(timerBinder.paused){
+                        timerBinder.pause()
+                    }
+                return true
+                }
+            R.id.action_stop->{
+                timerBinder.stop()
+                return true
+            }
+            }
+
+        return super.onOptionsItemSelected(item)
     }
 }
